@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/agexercise/db" VERSION="20090722" COMMENT="XMLDB file for AGEXERCISE module"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="agexercise" COMMENT="each record is one agexercise" NEXT="agexercise_grades">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="course" NEXT="exid"/>
+        <FIELD NAME="exid" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="name" NEXT="intro"/>
+        <FIELD NAME="intro" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="exid" NEXT="introformat"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="intro" NEXT="relativepath"/>
+        <FIELD NAME="relativepath" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="introformat" NEXT="displayoptions"/>
+        <FIELD NAME="displayoptions" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="relativepath" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="number" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" DECIMALS="5" PREVIOUS="displayoptions" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="grade"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course" NEXT="exid"/>
+        <INDEX NAME="exid" UNIQUE="false" FIELDS="exid" PREVIOUS="course"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="agexercise_grades" COMMENT="grade for user per agexercise" PREVIOUS="agexercise" NEXT="agexercise_grades_queue">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="agexercise"/>
+        <FIELD NAME="agexercise" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Foreign key references agexercise.id." PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Foreign key references user.id." PREVIOUS="agexercise" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="number" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" DECIMALS="5" COMMENT="The overall grade from the agexercise. Not affected by overrides in the gradebook." PREVIOUS="userid" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="The last time this grade changed." PREVIOUS="grade"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="agexercise"/>
+        <KEY NAME="agexercise" TYPE="foreign" FIELDS="agexercise" REFTABLE="agexercise" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="agexercise_grades_queue" COMMENT="queue for grades that do not have corresponding activities yet" PREVIOUS="agexercise_grades">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="exid"/>
+        <FIELD NAME="exid" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="the name" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Foreign key references user.id." PREVIOUS="exid" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="number" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" DECIMALS="5" COMMENT="The overall grade from the agexercise. Not affected by overrides in the gradebook." PREVIOUS="userid" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="The last time this record was updated." PREVIOUS="grade"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
