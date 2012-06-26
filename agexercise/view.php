@@ -24,6 +24,15 @@ $completion->set_module_viewed($cm);
 
 $PAGE->set_url('/mod/agexercise/view.php', array('id' => $cm->id));
 
+$displaytype = $agexercise->display;
+if ($displaytype == RESOURCELIB_DISPLAY_OPEN) {
+    // For 'open' links, we always redirect to the content - except if the user
+    // just chose 'save and display' from the form then that would be confusing
+    if (!isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'], 'modedit.php') === false) {
+        $redirect = true;
+    }
+}
+
 if ($redirect) {
     // coming from course page or url index page,
     // the redirection is needed for completion tracking and logging
@@ -31,4 +40,11 @@ if ($redirect) {
     redirect(str_replace('&amp;', '&', $fullurl));
 }
 
-agexercise_print_workaround($agexercise, $cm, $course);
+switch ($displaytype) {
+    case RESOURCELIB_DISPLAY_FRAME:
+        agexercise_display_frame($agexercise, $cm, $course);
+        break;
+    default:
+        agexercise_print_workaround($agexercise, $cm, $course);
+        break;
+}

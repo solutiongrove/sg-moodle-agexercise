@@ -2,9 +2,22 @@
 
 $string['agexercise:view'] = 'View URL';
 $string['clicktoopen'] = 'Practice this {$a}.';
+$string['configdisplayoptions'] = 'Select all options that should be available, existing settings are not modified. Hold CTRL key to select multiple fields.';
+$string['configframesize'] = 'When the exercise page is displayed within a frame, this value is the height (in pixels) of the top frame (which contains the navigation).';
 $string['contentheader'] = 'Academy Grove Data';
 $string['cronsettings'] = 'Cron Settings';
 $string['cronsettings_intro'] = 'The values here are used by the cron backend. These are normally left alone.';
+$string['displayoptions'] = 'Available display options';
+$string['displayselect'] = 'Display';
+$string['displayselect_help'] = 'This setting determines how the exercise page is displayed. Options may include:
+
+* Automatic - The best display option for the exercise page is selected automatically
+* Open - Only the exercise page is displayed in the browser window
+* In pop-up - The exercise page is displayed in a new browser window without menus or an address bar
+* In frame - The exercise page is displayed within a frame below the the navigation bar and video description
+* New window - The exercise page is displayed in a new browser window with menus and an address bar';
+$string['displayselectexplain'] = 'Choose default display type.';
+$string['framesize'] = 'Frame height';
 $string['exercise'] = 'skill';
 $string['exercisename'] = 'Exercise: ';
 $string['exid'] = 'Academy Grove Exercise ID';
@@ -19,6 +32,10 @@ $string['optionsheader'] = 'Options';
 $string['page-mod-agexercise-x'] = 'Any AG EXERCISE module page';
 $string['pluginadministration'] = 'AG Exercise module administration';
 $string['pluginname'] = 'AG Exercise';
+$string['popupheight'] = 'Popup height (in pixels)';
+$string['popupheightexplain'] = 'Specifies default height of popup windows.';
+$string['popupwidth'] = 'Popup width (in pixels)';
+$string['popupwidthexplain'] = 'Specifies default width of popup windows.';
 $string['printheading'] = 'Display exercise name';
 $string['printheadingexplain'] = 'Display exercise name on view page?';
 $string['printintro'] = 'Display exercise description';

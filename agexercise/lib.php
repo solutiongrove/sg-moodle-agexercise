@@ -106,6 +106,11 @@ function agexercise_add_instance($data, $mform) {
     require_once($CFG->dirroot.'/mod/agexercise/locallib.php');
 
     $data->name = get_string('exercisename', 'agexercise').$data->name;
+    $displayoptions = array();
+    if ($data->display == RESOURCELIB_DISPLAY_POPUP) {
+        $displayoptions['popupwidth']  = $data->popupwidth;
+        $displayoptions['popupheight'] = $data->popupheight;
+    }
     $displayoptions['printheading'] = (int)!empty($data->printheading);
     $displayoptions['printintro']   = (int)!empty($data->printintro);
     $data->displayoptions = serialize($displayoptions);
@@ -133,6 +138,11 @@ function agexercise_update_instance($data, $mform) {
 
     require_once($CFG->dirroot.'/mod/agexercise/locallib.php');
 
+    $displayoptions = array();
+    if ($data->display == RESOURCELIB_DISPLAY_POPUP) {
+        $displayoptions['popupwidth']  = $data->popupwidth;
+        $displayoptions['popupheight'] = $data->popupheight;
+    }
     $displayoptions['printheading'] = (int)!empty($data->printheading);
     $displayoptions['printintro']   = (int)!empty($data->printintro);
     $data->displayoptions = serialize($displayoptions);
